@@ -3,6 +3,6 @@
 <string name ="first_button">Прийняти час</string>
 <string name="id">Час у хвилинах</string>
 <string name="id_2">Час, після якого додаток заблокує екран телефона</string>
-<string name="second_button">Скинути</string>
+<string name="second_button">Скинути час</string>
 <string name="continue_time">*відлік часу*</string>
 </resources>

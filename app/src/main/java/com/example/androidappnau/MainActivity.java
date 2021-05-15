@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button reset;
     private Boolean mTimerRunning;
     private long EndTime;
-    private long checkbutton;
+    private long settext;
 
 
     @Override
@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, CustomService.class);
 
 
-        mCountDownTimer = new CountDownTimer(Mtime*60000,1000) { // adjust the milli seconds here
+        mCountDownTimer = new CountDownTimer(Mtime,1000) { // adjust the milli seconds here
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimerRunning = true;
                 Mtime = millisUntilFinished;
-                checkbutton = millisUntilFinished;
                 updateCountdown();
+                settext = millisUntilFinished;
                 updateButton();
             }
             public void onFinish() {
@@ -88,13 +88,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textcontinue.setText(timeleftformatted);
     }
 
-    private void updateButton(){
-        if (mTimerRunning){
+    private void updateButton() {
+        if (mTimerRunning) {
+            reset.setText("Скинути час");
             start.setVisibility(View.INVISIBLE);
-        }
-        else{
+            reset.setVisibility(View.VISIBLE);
+        } else {
+            reset.setText("Стоп аудіо");
+            if(Mtime==0){
+                reset.setText("Скинути час");
+                reset.setVisibility(View.INVISIBLE);
+            }
             start.setVisibility(View.VISIBLE);
-
         }
     }
     @Override
@@ -102,9 +107,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view == start) {
             mTimerRunning = true;
+
             starttimer();
             updateButton();
 
+            Intent intent = new Intent(this, CustomService.class);//У випадку повторного нажаття
+            stopService(intent);
         }
 
 
@@ -114,8 +122,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mTimerRunning = false;
             mCountDownTimer.cancel();
             time.setText("");
+
             Intent intent = new Intent(this, CustomService.class);
             stopService(intent);
+
+            Mtime = 0;
             updateButton();
 
             Log.i(TAG, "Service stop");
