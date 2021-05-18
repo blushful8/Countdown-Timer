@@ -14,15 +14,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.timepicker.TimeFormat;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText time;
-    private TextView introduction;
+    private TextView data;
     private TextView textcontinue;
     private long Mtime;
     private CountDownTimer mCountDownTimer;
@@ -31,8 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button reset;
     private Boolean mTimerRunning;
     private long EndTime;
-    private long settext;
-
+    private TextClock MTextClock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +47,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         time = findViewById(R.id.et_set_time_off_device);
         start = findViewById(R.id.b_first_button);
-        introduction = findViewById(R.id.tv_introduction);
+        data = findViewById(R.id.tv_data);
         reset = findViewById(R.id.v_second_button);
         textcontinue = findViewById(R.id.tv_continue_time);
+        MTextClock = findViewById(R.id.tc_current_time);
+
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+        data.setText("Сьогодні: "+ currentDate);
+
+
 
 
         start.setOnClickListener(this);
         reset.setOnClickListener(this);
     }
+
+
 
 
     private void starttimer(){
@@ -63,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mTimerRunning = true;
                 Mtime = millisUntilFinished;
                 updateCountdown();
-                settext = millisUntilFinished;
                 updateButton();
             }
             public void onFinish() {
