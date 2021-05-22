@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="@drawable/image"
+
+    >
+
+    <TextView
+        android:id="@+id/tv_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/id_2"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/current_time"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp"
+
+            />
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tc_current_time"
+            android:textColor="@color/white"
+            android:format24Hour="HH:mm:ss"
+            android:layout_marginLeft="3dp"
+            tools:targetApi="jelly_bean_mr1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        android:textColor="@color/white">
+
+        <EditText
+            android:id="@+id/et_set_time_off_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@drawable/fields"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/ic_baseline"
+            android:drawableLeft="@drawable/ic_baseline"
+            android:hint="@string/id"
+            android:inputType="time"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="15sp"
+
+            />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+        <Button
+            android:id="@+id/v_second_button"
+            android:layout_width="120dp"
+            android:layout_height="70dp"
+            android:background="@drawable/fields"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="15dp"
+            android:text="@string/second_button"
+            app:backgroundTint="#7F15AC" />
+        <Button
+            android:id="@+id/b_first_button"
+            android:layout_width="120dp"
+            android:layout_height="70dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="150dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/fields"
+            android:text="@string/first_button"
+            app:backgroundTint="#7F15AC" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingBottom="15dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:textSize="18sp"
+            android:background="@drawable/fields"
+            android:visibility="visible"
+            android:id="@+id/tv_continue_time"
+            android:textColor="@color/white"
+            android:text="@string/continue_time"
+            />
+
+
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/b_get_data"
+            android:padding="10dp"
+            android:text="@string/database"
+            android:backgroundTint="@color/cardview_dark_background"
+            tools:targetApi="lollipop"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/final_stage"
+            android:textColor="#FF5722"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="350dp"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
