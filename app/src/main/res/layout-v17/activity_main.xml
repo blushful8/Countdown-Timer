@@ -130,6 +130,29 @@
 
 
 
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/b_get_data"
+            android:padding="10dp"
+            android:text="@string/database"
+            android:backgroundTint="@color/cardview_dark_background"
+            tools:targetApi="lollipop"
+            />
+
     </LinearLayout>
 
     <LinearLayout
@@ -137,14 +160,17 @@
         android:layout_height="match_parent"
         >
 
+
+
+
         <TextView
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/final_stage"
             android:textColor="#FF5722"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="270dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginTop="350dp"
             />
     </LinearLayout>
 

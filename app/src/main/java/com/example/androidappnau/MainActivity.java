@@ -3,10 +3,14 @@ package com.example.androidappnau;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
@@ -37,26 +41,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  Button start;
     private Button reset;
     private Boolean mTimerRunning;
-    private long EndTime;
-    private TextClock MTextClock;
+    private Button mData;
+    private MediaPlayer click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setVolumeControlStream(100);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         time = findViewById(R.id.et_set_time_off_device);
         start = findViewById(R.id.b_first_button);
         data = findViewById(R.id.tv_data);
         reset = findViewById(R.id.v_second_button);
         textcontinue = findViewById(R.id.tv_continue_time);
-        MTextClock = findViewById(R.id.tc_current_time);
+        mData = findViewById(R.id.b_get_data);
 
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
         data.setText("Сьогодні: "+ currentDate);
 
 
+        click = MediaPlayer.create(this, R.raw.click);
+        click.setLooping(false);
 
 
         start.setOnClickListener(this);
@@ -66,13 +74,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
     private void starttimer(){
         Mtime = Integer.parseInt(time.getText().toString());
-        EndTime = System.currentTimeMillis() + Mtime;
         Intent intent = new Intent(this, CustomService.class);
 
 
-        mCountDownTimer = new CountDownTimer(Mtime,1000) { // adjust the milli seconds here
+        mCountDownTimer = new CountDownTimer(Mtime*60000,1000) { // adjust the milli seconds here
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimerRunning = true;
@@ -121,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(view == start) {
             mTimerRunning = true;
+            click.start();
 
             starttimer();
             updateButton();
@@ -136,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mTimerRunning = false;
             mCountDownTimer.cancel();
             time.setText("");
+            click.start();
 
             Intent intent = new Intent(this, CustomService.class);
             stopService(intent);
@@ -145,30 +155,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Log.i(TAG, "Service stop");
         }
-    }
 
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong("millisLeft", Mtime);
-        outState.putBoolean("timerRunning", mTimerRunning);
-        outState.putLong("endTime", EndTime);
-    }
-
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        Mtime = savedInstanceState.getLong("millisLeft");
-        mTimerRunning = savedInstanceState.getBoolean("timerRunning");
-        updateCountdown();
-        updateButton();
-
-        if (mTimerRunning) {
-            EndTime = savedInstanceState.getLong("endTime");
-            Mtime = EndTime - System.currentTimeMillis();
-            starttimer();
+        if(view == mData){
+            click.start();
+            startActivity(new Intent(getApplicationContext(),GetData.class));
         }
+
     }
+
+    private void saveData(){
+        String name_txt = time.getText().toString().trim();
+
+        UserModel model = new UserModel();
+        model.setName(name_txt);
+        DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
+
+        time.setText("");
+
+        Toast.makeText(this,"Текст успішно збережено", Toast.LENGTH_SHORT).show();
+    }
+
 }
