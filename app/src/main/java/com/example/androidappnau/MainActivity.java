@@ -124,31 +124,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
 
         if (view == start) {
-            saveData();
-            mTimerRunning = true;
-            click.start();
+            try{
+                saveData();
+                mTimerRunning = true;
+                click.start();
 
-            starttimer();
-            updateButton();
+                starttimer();
+                updateButton();
 
-            Intent intent = new Intent(this, CustomService.class);//У випадку повторного нажаття
-            stopService(intent);
+                Intent intent = new Intent(this, CustomService.class);//У випадку повторного нажаття
+                stopService(intent);
+            }catch(Exception exeption){
+                exeption.printStackTrace();;
+            }
+
         }
 
 
         if (view == reset) {
-            mTimerRunning = false;
-            mCountDownTimer.cancel();
-            time.setText("");
-            click.start();
+            try {
 
-            Intent intent = new Intent(this, CustomService.class);
-            stopService(intent);
 
-            Mtime = 0;
-            updateButton();
+                mTimerRunning = false;
+                mCountDownTimer.cancel();
+                time.setText("");
+                click.start();
 
-            Log.i(TAG, "Service stop");
+                Intent intent = new Intent(this, CustomService.class);
+                stopService(intent);
+
+                Mtime = 0;
+                updateButton();
+
+                Log.i(TAG, "Service stop");
+            }catch(Exception e){
+                e.printStackTrace();
+            }
         }
 
         if(view == getData){
