@@ -3,7 +3,7 @@ package com.example.androidappnau;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -23,19 +23,19 @@ import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
     private EditText time;
     private TextView data;
     private TextView textcontinue;
     private long Mtime;
     private CountDownTimer mCountDownTimer;
-    String TAG = "Main";
+    private String TAG = "Main";
     private Button start;
     private Button reset;
     private Boolean mTimerRunning;
     private MediaPlayer click;
-    Button activity;
-    EditText name;
-    Button save, getData;
+    private EditText name;
+    private Button getData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         data = findViewById(R.id.tv_data);
         reset = findViewById(R.id.v_second_button);
         textcontinue = findViewById(R.id.tv_continue_time);
-        activity = findViewById(R.id.secondactivity);
-        save = findViewById(R.id.btn_save);
+
         getData = findViewById(R.id.btn_getData);
         name = time;
 
@@ -61,36 +60,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         click = MediaPlayer.create(this, R.raw.click);
         click.setLooping(false);
 
-
-        getData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), GetData.class));
-            }
-        });
-
         start.setOnClickListener(this);
         reset.setOnClickListener(this);
-        activity.setOnClickListener(this);
+        getData.setOnClickListener(this);
 
 
     }
 
-    private void saveData() {
-
-        String name_txt = name.getText().toString().trim();
-
-
-
-        UserModel model = new UserModel();
-        model.setName(name_txt);
-
-        DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
-
-        Toast.makeText(this, "Data Successfully Saved", Toast.LENGTH_SHORT).show();
-
-
-    }
 
 
     private void starttimer() {
@@ -175,8 +151,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.i(TAG, "Service stop");
         }
 
-        if (view == activity) {
-            startActivity(new Intent(getApplicationContext(), SecondActivity.class));
+        if(view == getData){
+            click.start();
+            startActivity(new Intent(getApplicationContext(), GetData.class));
         }
+
+    }
+    private void saveData() {
+
+        String name_txt = name.getText().toString().trim();
+
+
+
+        UserModel model = new UserModel();
+        model.setName(name_txt);
+
+        DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
+
+        Toast.makeText(this, "Data Successfully Saved", Toast.LENGTH_SHORT).show();
+
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.androidappnau.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidappnau.EntityClass.UserModel;
 import com.example.androidappnau.R;
-import com.example.androidappnau.UpdateData;
+
 
 import java.util.List;
 
@@ -23,11 +24,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     Context context;
     List<UserModel> list;
     DeleteItemClicklistner deleteItemClicklistner;
+    private MediaPlayer click;
 
     public UserAdapter(Context context, List<UserModel> list, DeleteItemClicklistner deleteItemClicklistner) {
         this.context = context;
         this.list = list;
         this.deleteItemClicklistner = deleteItemClicklistner;
+
     }
 
     @NonNull
@@ -43,20 +46,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.name.setText(list.get(position).getName());
 
 
-        holder.update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, UpdateData.class);
-                intent.putExtra("id", String.valueOf(list.get(position).getKey()));
-                intent.putExtra("name", String.valueOf(list.get(position).getName()));
-
-                context.startActivity(intent);
-
-            }
-        });
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                click.start();
                 deleteItemClicklistner.onItemDelete(position, list.get(position).getKey());
 
             }
@@ -71,15 +64,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        Button update, delete;
+        Button delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
 
             name = itemView.findViewById(R.id.name);
-            update = itemView.findViewById(R.id.updateId);
             delete = itemView.findViewById(R.id.deleteId);
+            click = MediaPlayer.create(context, R.raw.click);
+            click.setLooping(false);
+
         }
     }
 

@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity"
     android:background="@drawable/image"
-
     >
 
     <TextView
@@ -42,6 +41,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:layout_marginLeft="3dp"
+            android:format24Hour="HH:mm:ss"
             tools:targetApi="jelly_bean_mr1" />
     </LinearLayout>
 
@@ -149,22 +149,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/secondactivity"
-            android:text="@string/secondactivity"
 
-            />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_save"
-            />
 
 
 
@@ -188,7 +176,7 @@
             android:text="@string/final_stage"
             android:textColor="#FF5722"
 
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="250dp"
             />
     </LinearLayout>
 

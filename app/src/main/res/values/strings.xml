@@ -15,4 +15,6 @@
     <string name="TV_random_text">123</string>
     <string name="get_data">Хронологія</string>
     <string name="secondactivity">secondactivity</string>
+    <string name="delete">Видалити запис</string>
+    <string name="backup">Повернутися та зупинити відлік</string>
 </resources>

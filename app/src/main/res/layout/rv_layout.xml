@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/TV_random_text"
-             />
+            />
 
         <TextView
             android:id="@+id/phone"
@@ -40,34 +40,18 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10sp"
         android:orientation="horizontal"
-        android:weightSum="2">
-
-        <Button
-            android:id="@+id/updateId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10sp"
-            android:layout_weight="1"
-            android:background="@color/cardview_dark_background"
-            android:text="Update"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:layout_marginRight="10sp" />
-
-        <Button
-            android:id="@+id/deleteId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10sp"
-            android:layout_weight="1"
-            android:background="@color/cardview_dark_background"
-            android:text="Delete"
-            android:textColor="#fff"
-            android:textStyle="bold"
-            android:layout_marginLeft="10sp" />
+        >
 
 
     </LinearLayout>
 
-
+    <Button
+        android:id="@+id/deleteId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/cardview_dark_background"
+        android:text="Delete"
+        android:textColor="#fff"
+        android:textStyle="bold"
+         />
 </LinearLayout>
