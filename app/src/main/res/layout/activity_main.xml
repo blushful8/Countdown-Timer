@@ -15,7 +15,8 @@
         android:id="@+id/tv_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
         android:text="@string/id_2"
         android:textSize="15sp"
         android:textColor="@color/white"
@@ -23,8 +24,25 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/current_time"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp"
+
+            />
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_marginLeft="3dp"
+            tools:targetApi="jelly_bean_mr1" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,16 +57,20 @@
             android:id="@+id/et_set_time_off_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@drawable/fields"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="8dp"
             android:drawableStart="@drawable/ic_baseline"
             android:drawableLeft="@drawable/ic_baseline"
             android:hint="@string/id"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
             android:inputType="time"
-            android:padding="10dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="15sp"
-
             />
+
+
 
 
     </LinearLayout>
@@ -65,7 +87,7 @@
             android:id="@+id/v_second_button"
             android:layout_width="120dp"
             android:layout_height="70dp"
-
+            android:background="@drawable/fields"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="11dp"
@@ -73,7 +95,6 @@
             android:text="@string/second_button"
             app:backgroundTint="#7F15AC" />
         <Button
-
             android:id="@+id/b_first_button"
             android:layout_width="120dp"
             android:layout_height="70dp"
@@ -81,8 +102,11 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="150dp"
             android:layout_marginRight="20dp"
+            android:background="@drawable/fields"
             android:text="@string/first_button"
             app:backgroundTint="#7F15AC" />
+
+
 
 
     </RelativeLayout>
@@ -99,13 +123,73 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:textSize="18sp"
+            android:background="@drawable/fields"
             android:visibility="visible"
             android:id="@+id/tv_continue_time"
-            android:text="@string/continue_time"
             android:textColor="@color/white"
+            android:text="@string/continue_time"
             />
 
 
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/secondactivity"
+            android:text="@string/secondactivity"
+
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save"
+            />
+
+
+
+
+        <Button
+            android:id="@+id/btn_getData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30sp"
+            android:background="@color/cardview_dark_background"
+            android:paddingHorizontal="30sp"
+            android:text="@string/get_data"
+            android:textColor="#fff"
+            android:textSize="16sp" />
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/final_stage"
+            android:textColor="#FF5722"
+
+            android:layout_marginTop="350dp"
+            />
     </LinearLayout>
 
 

@@ -1,20 +1,22 @@
 package com.example.androidappnau;
 
-
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.androidappnau.Adapter.UserAdapter;
+import com.example.androidappnau.EntityClass.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetData extends AppCompatActivity {
 
+
     RecyclerView recyclerview;
 
     private List<UserModel> list;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class GetData extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         getData();
+
     }
 
     private void getData() {

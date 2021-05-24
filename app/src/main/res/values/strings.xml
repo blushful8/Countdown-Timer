@@ -7,5 +7,12 @@
 <string name="continue_time">00:00:00</string>
     <string name="current_time">Даний час:</string>
     <string name="final_stage">Created by Dmitry Zinchenko</string>
-    <string name="database">Перейти до бази даних</string>
+    <string name="update">UPDATE</string>
+    <string name="name">name</string>
+    <string name="phone_no">phone</string>
+    <string name="address">address</string>
+    <string name="base_text">хв</string>
+    <string name="TV_random_text">123</string>
+    <string name="get_data">Хронологія</string>
+    <string name="secondactivity">secondactivity</string>
 </resources>
