@@ -16,11 +16,8 @@ import java.time.Clock;
 public class CustomService extends Service {
 
         String TAG = "Service TAG";
-        public static final String COUNTDOWN_BR = "com.example.dmitrysapplication";
-        Intent intent = new Intent (COUNTDOWN_BR);
-        private CountDownTimer mCountDownTimer = null;
         private MediaPlayer player;
-        private Clock clock;
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

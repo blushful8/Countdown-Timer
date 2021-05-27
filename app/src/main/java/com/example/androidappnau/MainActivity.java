@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
         time = findViewById(R.id.et_set_time_off_device);
@@ -147,7 +149,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 mTimerRunning = false;
                 mCountDownTimer.cancel();
-                time.setText("");
+                if(Mtime >0) {
+                    time.setText("");
+                }
                 click.start();
 
                 Intent intent = new Intent(this, CustomService.class);
@@ -171,12 +175,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void saveData() {
 
         String name_txt = name.getText().toString().trim();
-
-
-
         UserModel model = new UserModel();
-        model.setName(name_txt);
 
+        model.setName(name_txt);
         DatabaseClass.getDatabase(getApplicationContext()).getDao().insertAllData(model);
 
         Toast.makeText(this, "Data Successfully Saved", Toast.LENGTH_SHORT).show();
