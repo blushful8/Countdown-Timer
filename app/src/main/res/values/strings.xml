@@ -17,4 +17,5 @@
     <string name="secondactivity">secondactivity</string>
     <string name="delete">Видалити запис</string>
     <string name="backup">Повернутися та зупинити відлік</string>
+    <string name="btn_random">Рандомайзер</string>
 </resources>

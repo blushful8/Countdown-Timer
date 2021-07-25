@@ -3,19 +3,17 @@ package com.example.androidappnau;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
+import android.os.Bundle;
 import android.os.IBinder;
-import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import java.time.Clock;
-
 public class CustomService extends Service {
 
-        String TAG = "Service TAG";
+
+    String TAG = "Service TAG";
         private MediaPlayer player;
 
 

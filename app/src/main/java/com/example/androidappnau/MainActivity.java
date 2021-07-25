@@ -2,6 +2,7 @@ package com.example.androidappnau;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 
 import android.content.pm.ActivityInfo;
@@ -21,6 +22,7 @@ import com.example.androidappnau.EntityClass.UserModel;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -37,7 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MediaPlayer click;
     private EditText name;
     private Button getData;
+    private Button bRandom;
+    private TextView tvRandom;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +55,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         data = findViewById(R.id.tv_data);
         reset = findViewById(R.id.v_second_button);
         textcontinue = findViewById(R.id.tv_continue_time);
-
         getData = findViewById(R.id.btn_getData);
+        bRandom = findViewById(R.id.btn_random);
+        tvRandom = findViewById(R.id.tv_random_number);
+
         name = time;
 
         Calendar calendar = Calendar.getInstance();
@@ -65,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         start.setOnClickListener(this);
         reset.setOnClickListener(this);
         getData.setOnClickListener(this);
+        bRandom.setOnClickListener(this);
 
 
     }
@@ -72,40 +80,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private void starttimer() {
-        Mtime = Integer.parseInt(time.getText().toString());
-        Intent intent = new Intent(this, CustomService.class);
+            Mtime = Integer.parseInt(time.getText().toString());
+            Intent intent = new Intent(this, CustomService.class);
 
 
-        mCountDownTimer = new CountDownTimer(Mtime * 60000, 1000) { // adjust the milli seconds here
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimerRunning = true;
-                Mtime = millisUntilFinished;
-                updateCountdown();
-                updateButton();
-            }
+            mCountDownTimer = new CountDownTimer(Mtime * 60000, 1000) {  //adjust the milli seconds here
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTimerRunning = true;
+                    Mtime = millisUntilFinished;
+                    updateCountdown();
+                    updateButton();
+                }
 
-            public void onFinish() {
+                public void onFinish() {
 
 
-                startService(intent);
-                Log.i(TAG, "Service start");
-                textcontinue.setText("Час вичерпаний");
-                mTimerRunning = false;
-                updateButton();
-            }
-        }.start();
-        mTimerRunning = true;
-        updateButton();
-    }
+                    startService(intent);
+                    Log.i(TAG, "Service start");
+                    textcontinue.setText("Час вичерпаний");
+                    mTimerRunning = false;
+                    updateButton();
+                }
+            }.start();
+            mTimerRunning = true;
+            updateButton();
+        }
 
-    private void updateCountdown() {
-        int Seconds = (int) Mtime / 1000 % 60;
-        int Minutes = (int) Mtime / (60 * 1000) % 60;
-        int Hours = (int) Mtime / (60 * 60 * 1000) % 24;
-        String timeleftformatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", Hours, Minutes, Seconds);
-        textcontinue.setText(timeleftformatted);
-    }
+        private void updateCountdown() {
+            int Seconds = (int) Mtime / 1000 % 60;
+            int Minutes = (int) Mtime / (60 * 1000) % 60;
+            int Hours = (int) Mtime / (60 * 60 * 1000) % 24;
+            String timeleftformatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", Hours, Minutes, Seconds);
+            textcontinue.setText(timeleftformatted);
+        }
 
     private void updateButton() {
         if (mTimerRunning) {
@@ -130,9 +138,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 saveData();
                 mTimerRunning = true;
                 click.start();
-
                 starttimer();
                 updateButton();
+
+
 
                 Intent intent = new Intent(this, CustomService.class);//У випадку повторного нажаття
                 stopService(intent);
@@ -161,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 updateButton();
 
                 Log.i(TAG, "Service stop");
+
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -170,6 +180,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             click.start();
             startActivity(new Intent(getApplicationContext(), GetData.class));
         }
+
+        if(view == bRandom){
+            try {
+                click.start();
+                int a;
+                a = (int) (Math.random() * (100-1))+1;
+                String b = String.valueOf(a);
+                tvRandom.setText(b);
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            }
 
     }
     private void saveData() {
