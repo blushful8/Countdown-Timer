@@ -1,6 +1,9 @@
 package com.example.androidappnau;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textcontinue = findViewById(R.id.tv_continue_time);
         getData = findViewById(R.id.btn_getData);
         bRandom = findViewById(R.id.btn_random);
-        tvRandom = findViewById(R.id.tv_random_number);
+        tvRandom = findViewById(R.id.tv_random);
 
         name = time;
 
@@ -77,6 +80,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+    @SuppressLint("NonConstantResourceId")
+    public void Change(View view){
+        Fragment fragment = null;
+
+
+        switch (view.getId()){
+            case R.id.btn_random:
+            fragment = new Randomfragment();
+                    break;
+        }
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.ft_place, fragment);
+        ft.commit();
+    }
 
 
     private void starttimer() {
@@ -131,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
 
-        if (view == start) {
+        if (v == start) {
             try{
                 saveData();
                 mTimerRunning = true;
@@ -152,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        if (view == reset) {
+        if (v == reset) {
             try {
 
 
@@ -176,23 +195,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
-        if(view == getData){
+        if(v == getData){
             click.start();
             startActivity(new Intent(getApplicationContext(), GetData.class));
         }
-
-        if(view == bRandom){
-            try {
-                click.start();
-                int a;
-                a = (int) (Math.random() * (100-1))+1;
-                String b = String.valueOf(a);
-                tvRandom.setText(b);
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            }
 
     }
     private void saveData() {
