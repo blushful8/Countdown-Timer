@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidAppNAU">
+        <service
+            android:name=".Time_Service"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="true">
+
+        </service>
+
         <activity android:name=".GetData" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -17,10 +25,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".CustomService" >
 
-        <service
-            android:name=".CustomService"
-            />
+        </service>
     </application>
 
 </manifest>

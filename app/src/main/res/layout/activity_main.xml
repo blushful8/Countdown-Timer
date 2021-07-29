@@ -10,6 +10,7 @@
     android:background="@drawable/image"
     >
 
+
     <TextView
         android:id="@+id/tv_data"
         android:layout_width="wrap_content"
@@ -169,15 +170,6 @@
             android:textColor="#fff"
             android:textSize="16sp" />
 
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/final_stage"
-            android:textColor="#FF5722"
-
-            android:layout_marginTop="150dp"
-            />
     </LinearLayout>
 <LinearLayout
     android:layout_width="wrap_content"
@@ -186,29 +178,12 @@
     android:layout_gravity="center"
     >
 
-    <Button
-        android:id="@+id/btn_random"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:layout_marginTop="10dp"
-        android:onClick="Change"
-        android:text="@string/btn_random"
-        android:textSize="20sp"
-        tools:ignore="SmallSp" />
-
-
 </LinearLayout>
     <fragment
         android:name="com.example.androidappnau.Randomfragment"
         android:id="@+id/ft_place"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"/>
+        android:overScrollMode="always"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 </LinearLayout>

@@ -6,12 +6,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +28,7 @@ import android.widget.Toast;
 import com.example.androidappnau.EntityClass.UserModel;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Random;
@@ -41,9 +47,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Boolean mTimerRunning;
     private MediaPlayer click;
     private EditText name;
+    private TextView tRandom;
     private Button getData;
     private Button bRandom;
-    private TextView tvRandom;
+    String date_time;
+    Calendar calendar;
+    SimpleDateFormat simpleDateFormat;
+
+    SharedPreferences mpref;
+    SharedPreferences.Editor mEditor;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -52,7 +64,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        init();
 
+        name = time;
+
+        Calendar mcalendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(mcalendar.getTime());
+        data.setText(currentDate);
+
+
+        click = MediaPlayer.create(this, R.raw.click);
+        click.setLooping(false);
+
+       listener();
+
+
+    }
+    public void init(){
         time = findViewById(R.id.et_set_time_off_device);
         start = findViewById(R.id.b_first_button);
         data = findViewById(R.id.tv_data);
@@ -60,79 +88,79 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textcontinue = findViewById(R.id.tv_continue_time);
         getData = findViewById(R.id.btn_getData);
         bRandom = findViewById(R.id.btn_random);
-        tvRandom = findViewById(R.id.tv_random);
+        tRandom = findViewById(R.id.tv_random);
 
-        name = time;
+        mpref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mEditor = mpref.edit();
 
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-        data.setText("Сьогодні: " + currentDate);
+        try {
+            String str_value = mpref.getString("data", "");
+            if (str_value.matches("")) {
+                time.setEnabled(true);
+                start.setEnabled(true);
+                textcontinue.setText("");
 
+            } else {
 
-        click = MediaPlayer.create(this, R.raw.click);
-        click.setLooping(false);
+                if (mpref.getBoolean("finish", false)) {
+                    time.setEnabled(true);
+                    start.setEnabled(true);
+                    textcontinue.setText("");
+                } else {
 
+                    time.setEnabled(false);
+                    start.setEnabled(false);
+                    textcontinue.setText(str_value);
+                }
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+    public void listener(){
         start.setOnClickListener(this);
         reset.setOnClickListener(this);
         getData.setOnClickListener(this);
         bRandom.setOnClickListener(this);
-
-
-    }
-
-
-    @SuppressLint("NonConstantResourceId")
-    public void Change(View view){
-        Fragment fragment = null;
-
-
-        switch (view.getId()){
-            case R.id.btn_random:
-            fragment = new Randomfragment();
-                    break;
-        }
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.ft_place, fragment);
-        ft.commit();
     }
 
 
     private void starttimer() {
-            Mtime = Integer.parseInt(time.getText().toString());
-            Intent intent = new Intent(this, CustomService.class);
+        Mtime = Integer.parseInt(time.getText().toString());
+        Intent intent = new Intent(this, CustomService.class);
 
 
-            mCountDownTimer = new CountDownTimer(Mtime * 60000, 1000) {  //adjust the milli seconds here
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    mTimerRunning = true;
-                    Mtime = millisUntilFinished;
-                    updateCountdown();
-                    updateButton();
-                }
+        mCountDownTimer = new CountDownTimer(Mtime * 60000, 1000) {  //adjust the milli seconds here
+            @Override
+            public void onTick(long millisUntilFinished) {
+                mTimerRunning = true;
+                Mtime = millisUntilFinished;
+                updateCountdown();
+                updateButton();
+            }
 
-                public void onFinish() {
+            public void onFinish() {
 
 
-                    startService(intent);
-                    Log.i(TAG, "Service start");
-                    textcontinue.setText("Час вичерпаний");
-                    mTimerRunning = false;
-                    updateButton();
-                }
-            }.start();
-            mTimerRunning = true;
-            updateButton();
-        }
+                startService(intent);
+                Log.i(TAG, "Service start");
+                textcontinue.setText("Час вичерпаний");
+                mTimerRunning = false;
+                updateButton();
+            }
+        }.start();
+        mTimerRunning = true;
+        updateButton();
+    }
 
-        private void updateCountdown() {
-            int Seconds = (int) Mtime / 1000 % 60;
-            int Minutes = (int) Mtime / (60 * 1000) % 60;
-            int Hours = (int) Mtime / (60 * 60 * 1000) % 24;
-            String timeleftformatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", Hours, Minutes, Seconds);
-            textcontinue.setText(timeleftformatted);
-        }
+    private void updateCountdown() {
+        int Seconds = (int) Mtime / 1000 % 60;
+        int Minutes = (int) Mtime / (60 * 1000) % 60;
+        int Hours = (int) Mtime / (60 * 60 * 1000) % 24;
+        String timeleftformatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", Hours, Minutes, Seconds);
+        textcontinue.setText(timeleftformatted);
+    }
 
     private void updateButton() {
         if (mTimerRunning) {
@@ -143,27 +171,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             reset.setText("Стоп аудіо");
             if (Mtime == 0) {
                 reset.setText("Скинути час");
+                start.setVisibility(View.VISIBLE);
                 reset.setVisibility(View.INVISIBLE);
             }
             start.setVisibility(View.VISIBLE);
         }
     }
 
+
+
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void onClick(View v) {
 
         if (v == start) {
             try{
+
                 saveData();
-                mTimerRunning = true;
                 click.start();
-                starttimer();
-                updateButton();
+
+                    {
 
 
+                        time.setEnabled(false);
+                        start.setEnabled(false);
 
-                Intent intent = new Intent(this, CustomService.class);//У випадку повторного нажаття
-                stopService(intent);
+
+                        calendar = Calendar.getInstance();
+                        simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+                        date_time = simpleDateFormat.format(calendar.getTime());
+
+                        mEditor.putString("data", date_time).commit();
+                        mEditor.putString("minutes", time.getText().toString()).commit();
+
+
+                        Intent intent_service = new Intent(getApplicationContext(), Time_Service.class);
+                        startService(intent_service);
+                    }
+/*
+                    mTimer = new Timer();
+                    mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 5, NOTIFY_INTERVAL);*/
+
             }catch(Exception exeption){
                 exeption.printStackTrace();;
             }
@@ -174,25 +222,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v == reset) {
             try {
 
-
-                mTimerRunning = false;
-                mCountDownTimer.cancel();
-                if(Mtime >0) {
-                    time.setText("");
-                }
                 click.start();
 
                 Intent intent = new Intent(this, CustomService.class);
                 stopService(intent);
 
-                Mtime = 0;
-                updateButton();
 
+                Intent intent_time = new Intent(getApplicationContext(),Time_Service.class);
+                stopService(intent_time);
+
+                mEditor.clear().commit();
+
+                time.setEnabled(true);
+                start.setEnabled(true);
                 Log.i(TAG, "Service stop");
+                textcontinue.setText("0:0:0");
 
             }catch(Exception e){
                 e.printStackTrace();
             }
+        }
+
+        if(v == bRandom){
+
+            try {
+                click.start();
+                int a;
+                a = (int) (Math.random() * (100-1))+1;
+                String b;
+                b = String.valueOf(a);
+                tRandom.setText(b);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
         }
 
         if(v == getData){
@@ -200,6 +264,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(getApplicationContext(), GetData.class));
         }
 
+    }
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String str_time = intent.getStringExtra("time");
+            textcontinue.setText(str_time);
+
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(broadcastReceiver,new IntentFilter(Time_Service.str_receiver));
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(broadcastReceiver);
     }
     private void saveData() {
 
