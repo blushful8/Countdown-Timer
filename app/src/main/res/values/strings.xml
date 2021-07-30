@@ -21,4 +21,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btn_random">Рандомайзер</string>
     <string name="_0">0</string>
+    <string name="first_number">Від</string>
+    <string name="second_number">до</string>
 </resources>

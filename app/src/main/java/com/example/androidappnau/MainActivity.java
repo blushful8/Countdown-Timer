@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button reset;
     private Boolean mTimerRunning;
     private MediaPlayer click;
-    private EditText name;
+    private EditText name, first_number, second_number;
     private TextView tRandom;
     private Button getData;
     private Button bRandom;
@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getData = findViewById(R.id.btn_getData);
         bRandom = findViewById(R.id.btn_random);
         tRandom = findViewById(R.id.tv_random);
+        first_number = findViewById(R.id.et_first);
+        second_number = findViewById(R.id.et_second);
+
 
         mpref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         mEditor = mpref.edit();
@@ -125,58 +128,67 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bRandom.setOnClickListener(this);
     }
 
-
-    private void starttimer() {
-        Mtime = Integer.parseInt(time.getText().toString());
-        Intent intent = new Intent(this, CustomService.class);
-
-
-        mCountDownTimer = new CountDownTimer(Mtime * 60000, 1000) {  //adjust the milli seconds here
-            @Override
-            public void onTick(long millisUntilFinished) {
-                mTimerRunning = true;
-                Mtime = millisUntilFinished;
-                updateCountdown();
-                updateButton();
-            }
-
-            public void onFinish() {
-
-
-                startService(intent);
-                Log.i(TAG, "Service start");
-                textcontinue.setText("Час вичерпаний");
-                mTimerRunning = false;
-                updateButton();
-            }
-        }.start();
-        mTimerRunning = true;
-        updateButton();
+    private void RandomNumber(){
+        int a, b, c;
+        String d;
+        a = Integer.parseInt(first_number.getText().toString());
+        b = Integer.parseInt(second_number.getText().toString());
+        c = (int)(Math.random()*(b-a))+a;
+        d = String.valueOf(c);
+        tRandom.setText(d);
     }
 
-    private void updateCountdown() {
-        int Seconds = (int) Mtime / 1000 % 60;
-        int Minutes = (int) Mtime / (60 * 1000) % 60;
-        int Hours = (int) Mtime / (60 * 60 * 1000) % 24;
-        String timeleftformatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", Hours, Minutes, Seconds);
-        textcontinue.setText(timeleftformatted);
-    }
-
-    private void updateButton() {
-        if (mTimerRunning) {
-            reset.setText("Скинути час");
-            start.setVisibility(View.INVISIBLE);
-            reset.setVisibility(View.VISIBLE);
-        } else {
-            reset.setText("Стоп аудіо");
-            if (Mtime == 0) {
-                reset.setText("Скинути час");
-                start.setVisibility(View.VISIBLE);
-                reset.setVisibility(View.INVISIBLE);
-            }
-            start.setVisibility(View.VISIBLE);
-        }
-    }
+    //private void starttimer() {
+    //        Mtime = Integer.parseInt(time.getText().toString());
+    //        Intent intent = new Intent(this, CustomService.class);
+    //
+    //
+    //        mCountDownTimer = new CountDownTimer(Mtime * 60000, 1000) {  //adjust the milli seconds here
+    //            @Override
+    //            public void onTick(long millisUntilFinished) {
+    //                mTimerRunning = true;
+    //                Mtime = millisUntilFinished;
+    //                updateCountdown();
+    //                updateButton();
+    //            }
+    //
+    //            public void onFinish() {
+    //
+    //
+    //                startService(intent);
+    //                Log.i(TAG, "Service start");
+    //                textcontinue.setText("Час вичерпаний");
+    //                mTimerRunning = false;
+    //                updateButton();
+    //            }
+    //        }.start();
+    //        mTimerRunning = true;
+    //        updateButton();
+    //    }
+    //
+    //    private void updateCountdown() {
+    //        int Seconds = (int) Mtime / 1000 % 60;
+    //        int Minutes = (int) Mtime / (60 * 1000) % 60;
+    //        int Hours = (int) Mtime / (60 * 60 * 1000) % 24;
+    //        String timeleftformatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", Hours, Minutes, Seconds);
+    //        textcontinue.setText(timeleftformatted);
+    //    }
+    //
+    //    private void updateButton() {
+    //        if (mTimerRunning) {
+    //            reset.setText("Скинути час");
+    //            start.setVisibility(View.INVISIBLE);
+    //            reset.setVisibility(View.VISIBLE);
+    //        } else {
+    //            reset.setText("Стоп аудіо");
+    //            if (Mtime == 0) {
+    //                reset.setText("Скинути час");
+    //                start.setVisibility(View.VISIBLE);
+    //                reset.setVisibility(View.INVISIBLE);
+    //            }
+    //            start.setVisibility(View.VISIBLE);
+    //        }
+    //    }
 
 
 
@@ -247,11 +259,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             try {
                 click.start();
-                int a;
-                a = (int) (Math.random() * (100-1))+1;
-                String b;
-                b = String.valueOf(a);
-                tRandom.setText(b);
+                RandomNumber();
+
             }catch (Exception e){
                 e.printStackTrace();
             }
